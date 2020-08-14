@@ -98,4 +98,102 @@ if (!validateAnimal(req.body)) {
 
 ___________________________________________________________________________________________________________
 
+Misc
 
+req.body is where we can access and use the data sent from a client to a server.
+
+Q Can you use the same endpoint (i.e., /api/animals) for both GET and POST requests?
+A   When a request comes to our servers, we first resolve with URL endpoint the request is made to. After 
+    that, it then checks to see the type of request and routes it to the proper method's callback function.
+
+Q What would be in the req.body content of a POST request if you forget to set up the proper middleware?
+A   The req.body content would be empty. You need to use the proper middleware to instruct our server
+    how to parse incoming data.
+
+RECAP for 11.2
+
+    * Used the Express.js app.post() method to create POST routes that accept incoming data from a 
+      client request.
+    * Implemented middleware functionality provided by Express.js to turn our incoming POST data 
+      into JSON data.
+    * Used Insomnia Core to test our POST requests while we wait for the zoo's front-end designer 
+      to give us client-side code.
+
+___________________________________________________________________________________________________________
+___________________________________________________________________________________________________________
+___________________________________________________________________________________________________________
+
+11.3
+___________________________________________________________________________________________________________
+
+Rooting the server (or redirecting the user) with: app.get('/', (req, res)
+
+This allows you to direct users to the root of your server. When you carry index file in sub directory,
+you want to make sure the users is automatically directed to the front or your website.
+
+Place above .post and .listen
+
+Example of use:
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+Important: Remember that the order of your routes matter. It's important that additional routes are added
+before the * route.
+___________________________________________________________________________________________________________
+
+app.use(express.static('public')); - express.static() method explained
+
+The way it works is that we provide a file path to a location in our application and instruct the server 
+to make these files static resources. This means that all of our front-end (css, js) code can now be 
+accessed without having a specific server endpoint created.
+
+Deep Dive: https://expressjs.com/en/4x/api.html#express.static
+___________________________________________________________________________________________________________
+
+Use Fetch API to POST Data
+
+By default, the browser's fetch() functionality performs GET requests. The Fetch API also supports POST 
+requests.
+
+First and most importantly, you have to actually specify what type of request it is and set the 
+method to POST. This will allow the request to make it to the proper endpoint in your server.
+
+Next, tell the request what type of data to send and then actually provide the data. In the example below, 
+the headers property is set to inform the request that this is going to be JSON data. That way, it will
+add the stringified JSON data for the animalObject to the body property of the request. If these are 
+missing, req.body would never recieve the data.
+
+Example:
+
+fetch('/api/animals', {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(animalObject)
+})
+
+Deep Dive: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+___________________________________________________________________________________________________________
+
+fetch() note
+
+Remember, when using fetch() you have to check to see if the ok property in the response is true or false. 
+
+Example:
+
+fetch(queryUrl)
+  .then(response => {
+    if (!response.ok) {
+      return alert('Error: ' + response.statusText);
+    }
+    return response.json();
+  })
+  .then(animalData => {
+    console.log(animalData);
+    printResults(animalData);
+  });
+___________________________________________________________________________________________________________
