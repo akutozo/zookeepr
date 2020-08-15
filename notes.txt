@@ -32,17 +32,18 @@ ________________________________________________________________________________
 The express.urlencoded({extended: true}) method
 
 is a method built into Express.js. It takes incoming POST data and converts it to key/value pairings that 
-can be accessed in the req.body object. The extended: true option set inside the method call informs our 
-server that there may be sub-array data nested in it as well, so it needs to look as deep into the POST 
-data as possible to parse all of the data correctly.
+can be accessed in the req.body object.
+
+The extended: true option set inside the method call informs our server that there may be sub-array data 
+nested in it as well, so it needs to look as deep into the POST data as possible to parse all of the data 
+correctly.
 
 ___________________________________________________________________________________________________________
 
 The express.json() method 
 
-takes incoming POST data in the form of JSON and parses it into the req.body JavaScript object. Both of the 
-above middleware functions need to be set up every time you create a server that's looking to accept 
-POST data.
+takes incoming POST data in the form of JSON and parses it into the req.body JavaScript object. This 
+function needs to be set up every time you create a server that's looking to accept POST data.
 
 ___________________________________________________________________________________________________________
 ___________________________________________________________________________________________________________
@@ -197,3 +198,15 @@ fetch(queryUrl)
     printResults(animalData);
   });
 ___________________________________________________________________________________________________________
+
+Router
+
+Router, allows you to declare routes in any file as long as you use the proper middleware.
+
+Example:
+
+const router = require('express').Router();
+
+Deep Dive: https://expressjs.com/en/guide/routing.html#express-router
+___________________________________________________________________________________________________________
+
